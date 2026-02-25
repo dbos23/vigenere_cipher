@@ -17,8 +17,9 @@ def vigenere(mode, text, key):
     count = 0
 
     #encryption
-    #add each character from the plaintext to l
     if mode.lower() == 'encrypt':
+        
+        #add each character from the plaintext to l
         for i in range(len(text)):
             l.append(text[i])
             
@@ -33,8 +34,9 @@ def vigenere(mode, text, key):
                 count += 1
 
     #decryption
-    #add each character from the plaintext to l
     elif mode.lower() == 'decrypt':
+        
+        #add each character from the plaintext to l
         for i in range(len(text)):
             l.append(text[i])
 

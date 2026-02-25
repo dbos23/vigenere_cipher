@@ -62,7 +62,7 @@ Plaintext:
 Hello, world!
 ```
 
-## Project Structure
+## Project structure
 
 ```text
 .
@@ -73,7 +73,7 @@ Hello, world!
 └── main.py
 ```
 
-## Notes/Design
+## Design
 
 The project has a main script and a `modules` directory
 

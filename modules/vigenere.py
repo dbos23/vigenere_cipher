@@ -1,8 +1,9 @@
 from modules.setup import set_up_vars
+import sys
 
-def vig_encrypt(text, key):
+def vigenere(mode, text, key):
     '''
-    Encrypts plaintext using a Vigenere cipher with a provided key
+    Encrypts plaintext or decrypts ciphertext using a Vigenere cipher with a provided key
     '''
 
     #match key's length to that of the text. create two alphabets to allow for case preservation
@@ -15,18 +16,36 @@ def vig_encrypt(text, key):
     l = []
     count = 0
 
+    #encryption
     #add each character from the plaintext to l
-    for i in range(len(text)):
-        l.append(text[i])
+    if mode.lower() == 'encrypt':
+        for i in range(len(text)):
+            l.append(text[i])
+            
+            #encrypt the plaintext character, leaving non-letters as they are and preserving case
+            if l[i].isalpha():
+                if l[i].islower():
+                    l[i] = alph_l[(alph_l.index(text[i]) + alph_l.index(full_key[count])) % 26]
+                else:
+                    l[i] = alph_u[(alph_u.index(text[i]) + alph_u.index(full_key[count].upper())) % 26]
+        
+                #increment count to move to the next letter of the key
+                count += 1
 
-        #preserving case, replace the plaintext character with the encrypted character, leaving non-letters as they are
-        if l[i].isalpha():
-            if l[i].islower():
-                l[i] = alph_l[(alph_l.index(text[i]) + alph_l.index(full_key[count])) % 26]
-            else:
-                l[i] = alph_u[(alph_u.index(text[i]) + alph_u.index(full_key[count].upper())) % 26]
+    #decryption
+    #add each character from the plaintext to l
+    elif mode.lower() == 'decrypt':
+        for i in range(len(text)):
+            l.append(text[i])
 
-            #increment count to move to the next letter of the key
-            count += 1
-
+            #decrypt the encrypted character, leaving non-letters as they are and preserving case
+            if l[i].isalpha():
+                if l[i].islower():
+                    l[i] = alph_l[(alph_l.index(text[i]) - alph_l.index(full_key[count])) % 26]
+                else:
+                    l[i] = alph_u[(alph_u.index(text[i]) - alph_u.index(full_key[count].upper())) % 26]
+                
+                #increment count to move to the next letter of the key
+                count += 1
+    
     return ''.join(l)

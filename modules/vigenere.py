@@ -1,5 +1,4 @@
 from modules.setup import set_up_vars
-import sys
 
 def vigenere(mode, text, key):
     '''
@@ -15,39 +14,37 @@ def vigenere(mode, text, key):
     #l will hold the final list of characters. count is used to track the current position within the key
     l = []
     count = 0
-
-    #encryption
-    if mode.lower() == 'encrypt':
         
-        #add each character from the plaintext to l
-        for i in range(len(text)):
-            l.append(text[i])
+    #add each character from the plaintext to l
+    for i in range(len(text)):
+        l.append(text[i])
+
+        #only encrypt/decrypt letters
+        if l[i].isalpha():
+
+            #alphabetic positions of the letters from the text and key
+            text_index = alph_l.index(text[i].lower())
+            key_index = alph_l.index(full_key[count].lower())
+
+            #lowercase letters
+            if l[i].islower():
+
+                #encrypt or decrypt character
+                if mode.lower() == 'encrypt':
+                    l[i] = alph_l[(text_index + key_index) % 26]
+                elif mode.lower() == 'decrypt':
+                    l[i] = alph_l[(text_index - key_index) % 26]
             
-            #encrypt the plaintext character, leaving non-letters as they are and preserving case
-            if l[i].isalpha():
-                if l[i].islower():
-                    l[i] = alph_l[(alph_l.index(text[i]) + alph_l.index(full_key[count])) % 26]
-                else:
-                    l[i] = alph_u[(alph_u.index(text[i]) + alph_u.index(full_key[count].upper())) % 26]
-        
-                #increment count to move to the next letter of the key
-                count += 1
-
-    #decryption
-    elif mode.lower() == 'decrypt':
-        
-        #add each character from the plaintext to l
-        for i in range(len(text)):
-            l.append(text[i])
-
-            #decrypt the encrypted character, leaving non-letters as they are and preserving case
-            if l[i].isalpha():
-                if l[i].islower():
-                    l[i] = alph_l[(alph_l.index(text[i]) - alph_l.index(full_key[count])) % 26]
-                else:
-                    l[i] = alph_u[(alph_u.index(text[i]) - alph_u.index(full_key[count].upper())) % 26]
+            #capital letters
+            else:
                 
-                #increment count to move to the next letter of the key
-                count += 1
+                #encrypt or decrypt character
+                if mode.lower() == 'encrypt':
+                    l[i] = alph_u[(text_index + key_index) % 26]
+                elif mode.lower() == 'decrypt':
+                    l[i] = alph_u[(text_index - key_index) % 26]
+        
+            #increment count to move to the next letter of the key
+            count += 1
     
     return ''.join(l)

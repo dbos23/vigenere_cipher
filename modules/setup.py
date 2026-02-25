@@ -1,3 +1,18 @@
+import sys
+
+
+
+def check_key_validity(key):
+    '''
+    Checks if key is valid and exits the script if not 
+    '''
+    for letter in key:
+        if not letter.isalpha():
+            print(f'{key} is not a valid key. A key can only contain letters')
+            sys.exit()
+
+
+
 def set_up_vars(text, key):
     '''
     Extends or shortens a key until its length exactly matches that of the text it's encrypting or decrypting.

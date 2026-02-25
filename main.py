@@ -1,3 +1,4 @@
+from modules.setup import check_key_validity
 from modules.vigenere import vigenere
 import sys
 
@@ -8,10 +9,12 @@ mode = input('Select mode (valid options are "encrypt" and "decrypt"): ').lower(
 if mode == 'encrypt':
     text = input('Enter plaintext: ')
     key = input('Enter encryption key: ')
+    check_key_validity(key)
     print('Encrypted text:')
 elif mode == 'decrypt':
     text = input('Enter encrypted text: ')
     key = input('Enter decryption key: ')
+    check_key_validity(key)
     print('Plaintext:')
 else:
     print('Invalid mode selected. Acceptable options are "encrypt" and "decrypt"')
